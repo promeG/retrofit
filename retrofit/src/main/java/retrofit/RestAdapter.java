@@ -264,13 +264,18 @@ public class RestAdapter {
           @Override public ResponseWrapper invoke(RequestInterceptor requestInterceptor) {
             return (ResponseWrapper) invokeRequest(requestInterceptor, methodInfo, args);
           }
+
+          @Override
+          public RestMethodInfo methodInfo() {
+            return methodInfo;
+          }
         });
       }
 
       // Apply the interceptor synchronously, recording the interception so we can replay it later.
       // This way we still defer argument serialization to the background thread.
       final RequestInterceptorTape interceptorTape = new RequestInterceptorTape();
-      requestInterceptor.intercept(interceptorTape);
+      requestInterceptor.intercept(interceptorTape, methodInfo);
 
       Callback<?> callback = (Callback<?>) args[args.length - 1];
       httpExecutor.execute(new CallbackRunnable(callback, callbackExecutor, errorHandler) {
@@ -297,7 +302,7 @@ public class RestAdapter {
         RequestBuilder requestBuilder = new RequestBuilder(serverUrl, methodInfo, converter);
         requestBuilder.setArguments(args);
 
-        requestInterceptor.intercept(requestBuilder);
+        requestInterceptor.intercept(requestBuilder, methodInfo);
 
         Request request = requestBuilder.build();
         url = request.getUrl();

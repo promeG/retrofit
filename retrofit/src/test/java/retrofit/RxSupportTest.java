@@ -8,6 +8,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import retrofit.client.Header;
@@ -36,9 +37,14 @@ public class RxSupportTest {
     @Override public ResponseWrapper invoke(RequestInterceptor requestInterceptor) {
       return responseWrapper;
     }
+
+    @Override
+    public RestMethodInfo methodInfo() {
+      return null;
+    }
   });
   private RequestInterceptor requestInterceptor = spy(new RequestInterceptor() {
-    @Override public void intercept(RequestFacade request) {
+    @Override public void intercept(RequestFacade request, RestMethodInfo restMethodInfo) {
     }
   });
 
@@ -151,7 +157,7 @@ public class RxSupportTest {
     rxSupport.createRequestObservable(invoker).subscribe(subscriber);
 
     // The interceptor should have been called for each request upon subscription.
-    verify(requestInterceptor, times(2)).intercept(any(RequestFacade.class));
+    verify(requestInterceptor, times(2)).intercept(any(RequestFacade.class), Matchers.<RestMethodInfo>any());
 
     // Background execution of the requests should not touch the interceptor.
     executor.executeAll();

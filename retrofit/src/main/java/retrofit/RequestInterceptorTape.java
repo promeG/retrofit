@@ -31,7 +31,7 @@ final class RequestInterceptorTape implements RequestInterceptor.RequestFacade, 
     tape.add(new CommandWithParams(Command.ADD_ENCODED_QUERY_PARAM, name, value));
   }
 
-  @Override public void intercept(RequestFacade request) {
+  @Override public void intercept(RequestFacade request, RestMethodInfo restMethodInfo) {
     for (CommandWithParams cwp : tape) {
       cwp.command.intercept(request, cwp.name, cwp.value);
     }

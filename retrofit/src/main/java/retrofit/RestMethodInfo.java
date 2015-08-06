@@ -48,7 +48,7 @@ import retrofit.http.RestMethod;
 import rx.Observable;
 
 /** Request metadata about a service interface declaration. */
-final class RestMethodInfo {
+public final class RestMethodInfo {
 
   private enum ResponseType {
     VOID,
@@ -92,6 +92,18 @@ final class RestMethodInfo {
   // Parameter-level details
   Annotation[] requestParamAnnotations;
 
+  public Method getMethod() {
+    return method;
+  }
+
+  public String getRequestUrl() {
+    return requestUrl;
+  }
+
+  public String getRequestMethod() {
+    return requestMethod;
+  }
+
   RestMethodInfo(Method method) {
     this.method = method;
     responseType = parseResponseType();
@@ -111,7 +123,7 @@ final class RestMethodInfo {
     return methodError(message + " (parameter #" + (index + 1) + ")", args);
   }
 
-  synchronized void init() {
+  public synchronized void init() {
     if (loaded) return;
 
     parseMethodAnnotations();

@@ -16,6 +16,7 @@ final class RxSupport {
   interface Invoker {
     /** Invoke the request. The interceptor will be "tape" from the time of subscription. */
     ResponseWrapper invoke(RequestInterceptor requestInterceptor);
+    RestMethodInfo methodInfo();
   }
 
   private final Executor executor;
@@ -32,7 +33,9 @@ final class RxSupport {
     return Observable.create(new Observable.OnSubscribe<Object>() {
       @Override public void call(Subscriber<? super Object> subscriber) {
         RequestInterceptorTape interceptorTape = new RequestInterceptorTape();
-        requestInterceptor.intercept(interceptorTape);
+        final RestMethodInfo methodInfo = invoker.methodInfo();
+
+        requestInterceptor.intercept(interceptorTape, methodInfo);
 
         Runnable runnable = getRunnable(subscriber, invoker, interceptorTape);
         FutureTask<Void> task = new FutureTask<Void>(runnable, null);

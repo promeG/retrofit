@@ -765,7 +765,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addPathParam("ping", "po ng");
       }
     };
@@ -784,7 +784,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addEncodedPathParam("ping", "po%20ng");
       }
     };
@@ -803,7 +803,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addPathParam("kit", "kat");
       }
     };
@@ -822,7 +822,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addQueryParam("ping", "po ng");
       }
     };
@@ -841,7 +841,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addQueryParam("ping", "pong");
       }
     };
@@ -860,7 +860,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addPathParam("ping", "pong");
         request.addQueryParam("butter", "finger");
       }
@@ -880,7 +880,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addPathParam("kit", "kat");
         request.addQueryParam("butter", "finger");
       }
@@ -1719,7 +1719,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addHeader("ping", "pong");
         request.addHeader("kit", "kat");
       }
@@ -1741,7 +1741,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addHeader("kit", "kat");
       }
     };
@@ -1762,7 +1762,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addHeader("kit", "kat");
       }
     };
@@ -1867,7 +1867,7 @@ public class RequestBuilderTest {
       }
     }
     interceptor = new RequestInterceptor() {
-      @Override public void intercept(RequestFacade request) {
+      @Override public void intercept(RequestFacade request, RestMethodInfo methodInfo) {
         request.addHeader("Content-Type", "text/not-plain");
       }
     };
@@ -1907,7 +1907,7 @@ public class RequestBuilderTest {
 
     RequestBuilder builder = new RequestBuilder("http://example.com/", methodInfo, GSON);
     if (interceptor != null) {
-      interceptor.intercept(builder);
+      interceptor.intercept(builder, null);
     }
     builder.setArguments(args);
 
