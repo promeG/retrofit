@@ -3,10 +3,10 @@
   <groupId>com.squareup.retrofit</groupId>
   <artifactId>retrofit</artifactId>
   <versioning>
-    <release>1.9.0-ai</release>
+    <release>1.9.0-ai-for-urc</release>
     <versions>
-      <version>1.9.0-ai</version>
+      <version>1.9.0-ai-for-urc</version>
     </versions>
-    <lastUpdated>20150806104307</lastUpdated>
+    <lastUpdated>20160604073837</lastUpdated>
   </versioning>
 </metadata>
